@@ -8,8 +8,9 @@
  */
 
 public class RBTree {
-	private RBNode root;
+
 	private static final RBNode NULL = new RBNode();
+	private RBNode root = NULL;
 	private int size = 0;
 
 	/**
@@ -142,33 +143,28 @@ public class RBTree {
 	 * otherwise, returns null
 	 */
 	public String search(int k) {
-		RBNode y = NodeSearch(k);
+		RBNode y = nodeSearch(k);
 		if (y != null) {
 			return y.getValue();
 		}
 		return null;
 	}
 
-	public RBNode NodeSearch(int k) {
+	public RBNode nodeSearch(int k) {
 		RBNode x = this.root;
-		RBNode y = NULL;
-
 		while (!x.equals(NULL)) {
-			y = x;
 			if (k < x.getKey()) {
 				x = x.getLeft();
-			} else {
+			} else if (k > x.getKey()) {
 				x = x.getRight();
+			} else {
+				return x;
 			}
-		}
-
-		if (y.getKey() == k) {
-			return y;
 		}
 		return null;
 	}
 
-	public void LeftRotate(RBNode x) {
+	public void leftRotate(RBNode x) {
 		RBNode y = x.getRight();
 		x.setRight(y.getLeft());
 		if (!y.getLeft().equals(NULL)) {
@@ -186,7 +182,7 @@ public class RBTree {
 		x.setParent(y);
 	}
 
-	public void RightRotate(RBNode x) {
+	public void rightRotate(RBNode x) {
 		RBNode y = x.getLeft();
 		x.setLeft(y.getRight());
 		if (!y.getRight().equals(NULL)) {
@@ -214,7 +210,7 @@ public class RBTree {
 	 */
 	public int insert(int k, String v) {
 
-		if (NodeSearch(k) == null) {
+		if (nodeSearch(k) == null) {
 			return -1;
 		}
 
@@ -240,10 +236,10 @@ public class RBTree {
 		} else {
 			y.setRight(z);
 		}
-		return InsertFixUp(z);
+		return insertFixUp(z);
 	}
 
-	public int InsertFixUp(RBNode z) {
+	public int insertFixUp(RBNode z) {
 		RBNode y = NULL;
 		int count = 0;
 		while (z.getParent().isRed()) {
@@ -266,7 +262,7 @@ public class RBTree {
 				} else {
 					if (z == z.getParent().getRight()) {
 						z = z.getParent();
-						LeftRotate(z);
+						leftRotate(z);
 					}
 					if (z.getParent().isRed) {
 						count++;
@@ -276,7 +272,7 @@ public class RBTree {
 						count++;
 					}
 					z.getParent().getParent().setIsRed(true);
-					RightRotate(z.getParent().getParent());
+					rightRotate(z.getParent().getParent());
 				}
 			} else {
 				y = z.getParent().getParent().getLeft();
@@ -297,7 +293,7 @@ public class RBTree {
 				} else {
 					if (z == z.getParent().getLeft()) {
 						z = z.getParent();
-						RightRotate(z);
+						rightRotate(z);
 					}
 					if (z.getParent().isRed) {
 						count++;
@@ -307,7 +303,7 @@ public class RBTree {
 						count++;
 					}
 					z.getParent().getParent().setIsRed(true);
-					LeftRotate(z.getParent().getParent());
+					leftRotate(z.getParent().getParent());
 				}
 			}
 			this.root.setIsRed(false);
@@ -323,32 +319,33 @@ public class RBTree {
 	 * switches, or 0 if no color switches were needed. returns -1 if an item
 	 * with key k was not found in the tree.
 	 */
-	public int Delete(int k) {
-		RBNode z = NodeSearch(k);
+	public int delete(int k) {
+		RBNode z = nodeSearch(k);
 		if (z == null) {
 			return -1;
 		}
+		this.size--;
 		RBNode y = z, x;
 		boolean isOriginalYRed = y.isRed();
 		int count = 0;
 		if (z.getLeft().equals(NULL)) {
 			x = z.getRight();
-			Transplant(z, z.getRight());
+			transplant(z, z.getRight());
 		} else if (z.getRight().equals(NULL)) {
 			x = z.getLeft();
-			Transplant(z, z.getLeft());
+			transplant(z, z.getLeft());
 		} else {
-			y = TreeMin(z.getRight());
+			y = treeMin(z.getRight());
 			isOriginalYRed = y.isRed();
 			x = y.getRight();
 			if (y.getParent() == z) {
 				x.setParent(y);
 			} else {
-				Transplant(y, y.getRight());
+				transplant(y, y.getRight());
 				y.setRight(z.getRight());
 				y.getRight().setParent(y);
 			}
-			Transplant(z, y);
+			transplant(z, y);
 			y.setLeft(z.getLeft());
 			y.getLeft().setParent(y);
 			if (y.isRed()) {
@@ -357,12 +354,12 @@ public class RBTree {
 			y.setIsRed(z.isRed());
 		}
 		if (!isOriginalYRed) {
-			count += DeleteFixUp(x);
+			count += deleteFixUp(x);
 		}
 		return count;
 	}
 
-	public void Transplant(RBNode x, RBNode y) {
+	public void transplant(RBNode x, RBNode y) {
 		if (x.getParent().equals(NULL)) {
 			this.root = y;
 		} else if (x == x.getParent().getLeft()) {
@@ -373,7 +370,7 @@ public class RBTree {
 		y.setParent(x.getParent());
 	}
 
-	public int DeleteFixUp(RBNode x) {
+	public int deleteFixUp(RBNode x) {
 		int count = 0;
 		RBNode w;
 		while (!x.equals(this.root) && !x.isRed()) {
@@ -386,7 +383,7 @@ public class RBTree {
 						count++;
 					}
 					x.getParent().setIsRed(true);
-					LeftRotate(x.getParent());
+					leftRotate(x.getParent());
 					w = x.getParent().getRight();
 				}
 				if (!w.getLeft().isRed() && !w.getRight().isRed()) {
@@ -405,7 +402,7 @@ public class RBTree {
 							count++;
 						}
 						w.setIsRed(true);
-						RightRotate(w);
+						rightRotate(w);
 						w = x.getParent().getRight();
 					}
 					if (w.isRed() != x.getParent().isRed()) {
@@ -420,7 +417,7 @@ public class RBTree {
 						count++;
 					}
 					w.getRight().setIsRed(false);
-					LeftRotate(x.getParent());
+					leftRotate(x.getParent());
 					x = this.root;
 				}
 			} else {
@@ -432,7 +429,7 @@ public class RBTree {
 						count++;
 					}
 					x.getParent().setIsRed(true);
-					RightRotate(x.getParent());
+					rightRotate(x.getParent());
 					w = x.getParent().getRight();
 				}
 				if (!w.getRight().isRed() && !w.getLeft().isRed()) {
@@ -451,7 +448,7 @@ public class RBTree {
 							count++;
 						}
 						w.setIsRed(true);
-						LeftRotate(w);
+						leftRotate(w);
 						w = x.getParent().getLeft();
 					}
 					if (w.isRed() != x.getParent().isRed()) {
@@ -466,7 +463,7 @@ public class RBTree {
 						count++;
 					}
 					w.getLeft().setIsRed(false);
-					RightRotate(x.getParent());
+					rightRotate(x.getParent());
 					x = this.root;
 				}
 			}
@@ -482,10 +479,10 @@ public class RBTree {
 	 * if the tree is empty
 	 */
 	public String min() {
-		return TreeMin(this.root).getValue();
+		return treeMin(this.root).getValue();
 	}
 
-	public RBNode TreeMin(RBNode x) {
+	public RBNode treeMin(RBNode x) {
 		RBNode node = x;
 		while (!node.getLeft().equals(NULL)) {
 			node = node.getLeft();
@@ -507,6 +504,17 @@ public class RBTree {
 		return node.getValue();
 	}
 
+	public RBNode findSuccessor(RBNode x) {
+		RBNode node = x;
+		if (!node.getRight().equals(NULL)) {
+			return treeMin(node.getRight());
+		}
+		while (node == node.getParent().getRight()) {
+			node = node.getParent();
+		}
+		return node;
+	}
+
 	/**
 	 * public int[] keysToArray()
 	 *
@@ -514,8 +522,14 @@ public class RBTree {
 	 * array if the tree is empty.
 	 */
 	public int[] keysToArray() {
-		int[] arr = new int[42]; // to be replaced by student code
-		return arr; // to be replaced by student code
+		int[] arr = new int[this.size];
+		RBNode node = treeMin(this.root);
+		arr[0] = node.getKey();
+		for (int i = 1; i < arr.length; i++) {
+			node = findSuccessor(node);
+			arr[i] = node.getKey();
+		}
+		return arr;
 	}
 
 	/**
@@ -525,8 +539,14 @@ public class RBTree {
 	 * respective keys, or an empty array if the tree is empty.
 	 */
 	public String[] valuesToArray() {
-		String[] arr = new String[42]; // to be replaced by student code
-		return arr; // to be replaced by student code
+		String[] arr = new String[this.size];
+		RBNode node = treeMin(this.root);
+		arr[0] = node.getValue();
+		for (int i = 1; i < arr.length; i++) {
+			node = findSuccessor(node);
+			arr[i] = node.getValue();
+		}
+		return arr;
 	}
 
 	/**
@@ -537,7 +557,7 @@ public class RBTree {
 	 * precondition: none postcondition: none
 	 */
 	public int size() {
-		return 42; // to be replaced by student code
+		return this.size;
 	}
 
 	/**
@@ -548,7 +568,22 @@ public class RBTree {
 	 * precondition: none postcondition: none
 	 */
 	public int rank(RBNode k) {
-		return 42; // to be replaced by student code
+		int[] keys = keysToArray();
+
+		int low = 0;
+		int high = keys.length - 1;
+
+		while (high >= low) {
+			int middle = (low + high) / 2;
+			if (keys[middle] == k.getKey()) {
+				return middle;
+			} else if (keys[middle] < k.getKey()) {
+				low = middle + 1;
+			} else {
+				high = middle - 1;
+			}
+		}
+		return -1;
 	}
 
 	/**
