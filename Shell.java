@@ -61,7 +61,7 @@ public class RBTree {
 	 *
 	 */
 	public boolean empty() {
-		return false; // to be replaced by student code
+		return this.root == NULL;
 	}
 
 	/**
