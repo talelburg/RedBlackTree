@@ -16,21 +16,31 @@ public class RBTree {
 		private int key;
 		private String value;
 		private RBNode left, right, parent;
+		private boolean isRed;
+
 		public boolean isRed() {
-			return true;
+			return this.isRed;
+		}
+		
+		public String getValue(){
+			return this.value;
 		}
 
 		public RBNode getLeft() {
-			return null;
+			return this.left;
 		}
 
 		public RBNode getRight() {
-			return null;
+			return this.right;
 		}
 
-		public int getKey() {
-			return 42;
+		public RBNode getParent() {
+			return this.parent;
 		}
+		
+		public int getKey() {
+			return this.key;
+		}		 
 	}
 
 	/**
@@ -145,8 +155,7 @@ public class RBTree {
 	 *
 	 * Returns the number of nodes in the tree with a key smaller than k.
 	 *
-	 * precondition: none 
-	 * postcondition: none
+	 * precondition: none postcondition: none
 	 */
 	public int rank(RBNode k) {
 		return 42; // to be replaced by student code
