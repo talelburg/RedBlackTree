@@ -106,7 +106,11 @@ public class RBTree {
 	 * if the tree is empty
 	 */
 	public String min() {
-		return "42"; // to be replaced by student code
+		RBNode node = this.root;
+		while (!node.left.equals(NULL)) {
+			node = node.left;
+		}
+		return node.value;
 	}
 
 	/**
