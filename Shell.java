@@ -8,7 +8,8 @@
  */
 
 public class RBTree {
-
+	private RBNode root;
+	private final RBNode NULL = new RBNode();
 	/**
 	 * public class RBNode
 	 */
