@@ -9,7 +9,7 @@
 
 public class RBTree {
 	private RBNode root;
-	private final RBNode NULL = new RBNode();
+	private static final RBNode NULL = new RBNode();
 	/**
 	 * public class RBNode
 	 */
@@ -18,7 +18,26 @@ public class RBTree {
 		private String value;
 		private RBNode left, right, parent;
 		private boolean isRed;
-
+		public RBNode(int key, String value, RBNode parent) {
+			this.key = key;
+			this.value = value;
+			this.parent = parent;
+			this.right = NULL;
+			this.left = NULL;
+			this.isRed = true;
+		}
+		public RBNode() {
+			this.parent = this;
+			this.left = NULL;
+			this.right = NULL;
+			this.isRed = false;
+		}
+		public void addRight(RBNode right) {
+			this.right = right;
+		}
+		public void addLeft(RBNode left) {
+			this.left = left;
+		}
 		public boolean isRed() {
 			return this.isRed;
 		}
