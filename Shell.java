@@ -107,8 +107,8 @@ public class RBTree {
 	 */
 	public String min() {
 		RBNode node = this.root;
-		while (!node.left.equals(NULL)) {
-			node = node.left;
+		while (!node.getLeft().equals(NULL)) {
+			node = node.getLeft();
 		}
 		return node.value;
 	}
@@ -121,8 +121,8 @@ public class RBTree {
 	 */
 	public String max() {
 		RBNode node = this.root;
-		while (!node.right.equals(NULL)) {
-			node = node.right;
+		while (!node.getRight().equals(NULL)) {
+			node = node.getRight();
 		}
 		return node.value;
 	}
