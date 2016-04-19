@@ -123,7 +123,10 @@ public class RBTree {
 	 *
 	 */
 	public RBNode getRoot() {
-		return this.root;
+		if (!this.root.equals(NULL)) {
+			return this.root;
+		}
+		return null;
 	}
 
 	/**
@@ -210,7 +213,7 @@ public class RBTree {
 	 */
 	public int insert(int k, String v) {
 
-		if (nodeSearch(k) == null) {
+		if (nodeSearch(k) != null) {
 			return -1;
 		}
 
@@ -479,6 +482,9 @@ public class RBTree {
 	 * if the tree is empty
 	 */
 	public String min() {
+		if (this.empty()) {
+			return null;
+		}
 		return treeMin(this.root).getValue();
 	}
 
@@ -497,6 +503,9 @@ public class RBTree {
 	 * if the tree is empty
 	 */
 	public String max() {
+		if (this.empty()) {
+			return null;
+		}
 		RBNode node = this.root;
 		while (!node.getRight().equals(NULL)) {
 			node = node.getRight();
