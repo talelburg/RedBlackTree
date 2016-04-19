@@ -4,7 +4,7 @@
 *
 * An implementation of a Red Black Tree with
 * non-negative, distinct integer keys and values
-*Keren :)
+*
 */
 
 public class RBTree {
