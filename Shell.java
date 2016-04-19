@@ -10,6 +10,7 @@
 public class RBTree {
 	private RBNode root;
 	private static final RBNode NULL = new RBNode();
+	private int size = 0;
 
 	/**
 	 * public class RBNode
@@ -112,7 +113,6 @@ public class RBTree {
 				return false;
 			return true;
 		}
-
 	}
 
 	/**
@@ -132,7 +132,7 @@ public class RBTree {
 	 *
 	 */
 	public boolean empty() {
-		return this.root.equals(NULL);
+		return this.size == 0;
 	}
 
 	/**
@@ -213,6 +213,12 @@ public class RBTree {
 	 * with key k already exists in the tree.
 	 */
 	public int insert(int k, String v) {
+
+		if (NodeSearch(k) == null) {
+			return -1;
+		}
+
+		this.size++;
 		RBNode x = this.root;
 		RBNode y = NULL;
 		RBNode z = new RBNode(k, v, NULL);
