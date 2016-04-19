@@ -120,7 +120,11 @@ public class RBTree {
 	 * if the tree is empty
 	 */
 	public String max() {
-		return "42"; // to be replaced by student code
+		RBNode node = this.root;
+		while (!node.right.equals(NULL)) {
+			node = node.right;
+		}
+		return node.value;
 	}
 
 	/**
