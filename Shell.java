@@ -51,8 +51,9 @@ public class RBTree {
 	 *
 	 */
 	public RBNode getRoot() {
-		return null; // to be replaced by student code
+		return this.root;
 	}
+
 
 	/**
 	 * public boolean empty()
