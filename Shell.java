@@ -532,11 +532,14 @@ public class RBTree {
 	 * array if the tree is empty.
 	 */
 	public int[] keysToArray() {
+		if (this.size == 0)
+			return new int[0];
 		int[] arr = new int[this.size];
 		RBNode node = treeMin(this.root);
-		for (int i = 0; i < arr.length; i++) {
-			arr[i] = node.getKey();
+		arr[0] = node.getKey();
+		for (int i = 1; i < arr.length; i++) {
 			node = findSuccessor(node);
+			arr[i] = node.getKey();
 		}
 		return arr;
 	}
@@ -548,11 +551,14 @@ public class RBTree {
 	 * respective keys, or an empty array if the tree is empty.
 	 */
 	public String[] valuesToArray() {
+		if (this.size == 0)
+			return new String[0];
 		String[] arr = new String[this.size];
 		RBNode node = treeMin(this.root);
-		for (int i = 0; i < arr.length; i++) {
-			arr[i] = node.getValue();
+		arr[0] = node.getValue();
+		for (int i = 1; i < arr.length; i++) {
 			node = findSuccessor(node);
+			arr[i] = node.getValue();
 		}
 		return arr;
 	}
