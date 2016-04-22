@@ -398,7 +398,7 @@ public class RBTree {
 					x = x.getParent();
 				} else {
 					if (!w.getRight().isRed()) {
-						if (w.getLeft().isRed) {
+						if (w.getLeft().isRed()) {
 							count++;
 						}
 						w.getLeft().setIsRed(false);
@@ -417,7 +417,7 @@ public class RBTree {
 						count++;
 					}
 					x.getParent().setIsRed(false);
-					if (w.getRight().isRed) {
+					if (w.getRight().isRed()) {
 						count++;
 					}
 					w.getRight().setIsRed(false);
@@ -434,7 +434,7 @@ public class RBTree {
 					}
 					x.getParent().setIsRed(true);
 					rightRotate(x.getParent());
-					w = x.getParent().getRight();
+					w = x.getParent().getLeft();
 				}
 				if (!w.getRight().isRed() && !w.getLeft().isRed()) {
 					if (!w.isRed()) {
@@ -444,7 +444,7 @@ public class RBTree {
 					x = x.getParent();
 				} else {
 					if (!w.getLeft().isRed()) {
-						if (w.getRight().isRed) {
+						if (w.getRight().isRed()) {
 							count++;
 						}
 						w.getRight().setIsRed(false);
@@ -463,7 +463,7 @@ public class RBTree {
 						count++;
 					}
 					x.getParent().setIsRed(false);
-					if (w.getLeft().isRed) {
+					if (w.getLeft().isRed()) {
 						count++;
 					}
 					w.getLeft().setIsRed(false);
