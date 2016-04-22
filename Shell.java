@@ -519,10 +519,9 @@ public class RBTree {
 		if (!node.getRight().equals(NULL)) {
 			return treeMin(node.getRight());
 		}
-		while (node == node.getParent().getRight()) {
+		while (node == node.getParent().getRight())
 			node = node.getParent();
-		}
-		return node;
+		return node.getParent();
 	}
 
 	/**
