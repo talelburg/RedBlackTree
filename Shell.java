@@ -473,6 +473,7 @@ public class RBTree {
 			}
 		}
 		x.setIsRed(false);
+		NULL.setParent(NULL);
 		return count;
 	}
 
