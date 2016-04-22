@@ -234,6 +234,7 @@ public class RBTree {
 
 		if (y.equals(NULL)) {
 			this.root = z;
+			z.setIsRed(false);
 		} else if (k < y.getKey()) {
 			y.setLeft(z);
 		} else {
@@ -533,10 +534,9 @@ public class RBTree {
 	public int[] keysToArray() {
 		int[] arr = new int[this.size];
 		RBNode node = treeMin(this.root);
-		arr[0] = node.getKey();
-		for (int i = 1; i < arr.length; i++) {
-			node = findSuccessor(node);
+		for (int i = 0; i < arr.length; i++) {
 			arr[i] = node.getKey();
+			node = findSuccessor(node);
 		}
 		return arr;
 	}
@@ -550,10 +550,9 @@ public class RBTree {
 	public String[] valuesToArray() {
 		String[] arr = new String[this.size];
 		RBNode node = treeMin(this.root);
-		arr[0] = node.getValue();
-		for (int i = 1; i < arr.length; i++) {
-			node = findSuccessor(node);
+		for (int i = 0; i < arr.length; i++) {
 			arr[i] = node.getValue();
+			node = findSuccessor(node);
 		}
 		return arr;
 	}
