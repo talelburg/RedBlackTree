@@ -9,7 +9,8 @@
 
 public class RBTree {
 
-	private static final RBNode NULL = new RBNode();
+	public static final RBNode NULL = new RBNode(); // constant node, parent of
+							// root, child of leaves
 	private RBNode root = NULL;
 	private int size = 0;
 
@@ -22,24 +23,37 @@ public class RBTree {
 		private RBNode left, right, parent;
 		private boolean isRed;
 
+		/**
+		 * public RBNODE(int key, String value, RBNode parent)
+		 * 
+		 * initializes a new node with key, value and parent according to input
+		 * left and right initialized to RBTree.NULL, color initialized as red
+		 */
 		public RBNode(int key, String value, RBNode parent) {
 			this.key = key;
 			this.value = value;
 			this.parent = parent;
-			this.right = NULL;
-			this.left = NULL;
+			this.right = RBTree.NULL;
+			this.left = RBTree.NULL;
 			this.isRed = true;
 		}
-
+		/**
+		 * public RBNode()
+		 * 
+		 * special constructor, used only to instantiate RBTree.NULL - sets it
+		 * as parent and both children, its color as black, key as -1 and value as null
+		 */
 		public RBNode() {
 			this.key = -1;
 			this.value = null;
-			this.parent = this;
-			this.right = NULL;
-			this.left = NULL;
+			this.parent = RBTree.NULL;
+			this.right = RBTree.NULL;
+			this.left = RBTree.NULL;
 			this.isRed = false;
 		}
-
+		/**
+	 	* standard getters and setters
+	 	*/
 		public void setValue(String value) {
 			this.value = value;
 		}
@@ -83,7 +97,11 @@ public class RBTree {
 		public boolean isRed() {
 			return this.isRed;
 		}
-
+		/**
+		 * public boolean equals(Object obj)
+		 * 
+		 * standard equals, used to check if node is RBTree.NULL (just to be safe)
+		 */
 		@Override
 		public boolean equals(Object obj) {
 			if (this == obj)
