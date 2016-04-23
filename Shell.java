@@ -298,63 +298,43 @@ public class RBTree {
 			if (z.getParent() == z.getParent().getParent().getLeft()) { // z's parent is a left child
 				y = z.getParent().getParent().getRight();
 				if (y.isRed()) { // case 1 - z's uncle y is red
-					if (z.getParent().isRed()) {
-						count++;
-					}
 					z.getParent().setIsRed(false);
-					if (y.isRed()) {
-						count++;
-					}
+					count++;
 					y.setIsRed(false);
-					if (!z.getParent().getParent().isRed()) {
-						count++;
-					}
+					count++;
 					z.getParent().getParent().setIsRed(true);
+					count++;
 					z = z.getParent().getParent();
 				} else { // z's uncle y is black
 					if (z == z.getParent().getRight()) { // z is a right child
 						z = z.getParent();
 						leftRotate(z);
 					} // case 3 - z is a left child
-					if (z.getParent().isRed()) {
-						count++;
-					}
 					z.getParent().setIsRed(false);
-					if (!z.getParent().getParent().isRed()) {
-						count++;
-					}
+					count++;
 					z.getParent().getParent().setIsRed(true);
+					count++;
 					rightRotate(z.getParent().getParent());
 				}
 			} else { // z's parent is a right child
 				y = z.getParent().getParent().getLeft();
 				if (y.isRed()) { // case 1 - z's uncle y is red
-					if (z.getParent().isRed()) {
-						count++;
-					}
 					z.getParent().setIsRed(false);
-					if (y.isRed()) {
-						count++;
-					}
+					count++;
 					y.setIsRed(false);
-					if (!z.getParent().getParent().isRed()) {
-						count++;
-					}
+					count++;
 					z.getParent().getParent().setIsRed(true);
+					count++;
 					z = z.getParent().getParent();
 				} else { // z's uncle y is black
 					if (z == z.getParent().getLeft()) { // case 2 - z is a left child
 						z = z.getParent();
 						rightRotate(z);
 					} // case 3 - z is a right child
-					if (z.getParent().isRed()) {
-						count++;
-					}
 					z.getParent().setIsRed(false);
-					if (!z.getParent().getParent().isRed()) {
-						count++;
-					}
+					count++;
 					z.getParent().getParent().setIsRed(true);
+					count++;
 					leftRotate(z.getParent().getParent());
 				}
 			}
