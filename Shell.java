@@ -135,7 +135,7 @@ public class RBTree {
 				return true;
 			if (obj == null)
 				return false;
-			if (getClass() != obj.getClass())
+			if (!(obj instanceof RBNode))
 				return false;
 			RBNode other = (RBNode) obj;
 			if (isRed != other.isRed)
@@ -147,10 +147,17 @@ public class RBTree {
 					return false;
 			} else if (!left.equals(other.left))
 				return false;
+			if (parent == null) {
+				if (other.parent != null)
+					return false;
+			} else if (!parent.equals(other.parent))
+				return false;
 			if (right == null) {
 				if (other.right != null)
 					return false;
 			} else if (!right.equals(other.right))
+				return false;
+			if (size != other.size)
 				return false;
 			if (value == null) {
 				if (other.value != null)
