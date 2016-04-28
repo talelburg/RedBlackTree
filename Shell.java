@@ -9,8 +9,8 @@
 
 public class RBTree {
 
-	public static final RBNode NULL = new RBNode(); // constant node, parent of
-	// root, child of leaves
+	public static final RBNode NULL = new RBNode();
+	// constant node, parent of root, child of leaves
 	private RBNode root = NULL;
 
 	/**
@@ -330,11 +330,8 @@ public class RBTree {
 		RBNode y = NULL;
 		int count = 0;
 		while (z.getParent().isRed()) {
-			if (z.getParent() == z.getParent().getParent().getLeft()) { // z's
-																		// parent
-																		// is a
-																		// left
-																		// child
+			if (z.getParent() == z.getParent().getParent().getLeft()) {
+				// z's parent is a left child
 				y = z.getParent().getParent().getRight();
 				if (y.isRed()) { // case 1 - z's uncle y is red
 					z.getParent().setIsRed(false);
@@ -491,20 +488,15 @@ public class RBTree {
 					leftRotate(x.getParent());
 					w = x.getParent().getRight();
 				} // x's sibling w is now definitely black
-				if (!w.getLeft().isRed() && !w.getRight().isRed()) { // case 2 -
-																		// both
-																		// of
-																		// w's
-																		// children
-																		// are
-																		// black
+				if (!w.getLeft().isRed() && !w.getRight().isRed()) {
+					// case 2 - both of w's children are black
 					w.setIsRed(true);
 					count++;
 					x = x.getParent();
 				} else {
-					if (!w.getRight().isRed()) { // case 3 - w's right child is
-													// black and w's left child
-													// is red
+					if (!w.getRight().isRed()) {
+						// case 3 - w's right child is black and w's left child
+						// is red
 						w.getLeft().setIsRed(false);
 						count++;
 						w.setIsRed(true);
@@ -535,20 +527,15 @@ public class RBTree {
 					rightRotate(x.getParent());
 					w = x.getParent().getLeft();
 				} // x's sibling w is now definitely black
-				if (!w.getRight().isRed() && !w.getLeft().isRed()) { // case 2 -
-																		// both
-																		// of
-																		// w's
-																		// children
-																		// are
-																		// black
+				if (!w.getRight().isRed() && !w.getLeft().isRed()) {
+					// case 2 - both of w's children are black
 					w.setIsRed(true);
 					count++;
 					x = x.getParent();
 				} else {
-					if (!w.getLeft().isRed()) { // case 3 - w's left child is
-												// black and w's right child is
-												// red
+					if (!w.getLeft().isRed()) {
+						// case 3 - w's left child is black and w's right child
+						// is red
 						w.getRight().setIsRed(false);
 						count++;
 						w.setIsRed(true);
@@ -633,16 +620,15 @@ public class RBTree {
 	public RBNode findSuccessor(RBNode x) {
 		RBNode node = x;
 		if (!node.getRight().equals(NULL)) { // if x has a right child
-			return treeMin(node.getRight()); // find minimal node in right
-												// subtree of x, a.k.a its
-												// successor
+			return treeMin(node.getRight());
+			// find minimal node in right subtree of x, a.k.a its successor
 		}
-		while (node == node.getParent().getRight()) { // x does not have a right
-														// child
+		while (node == node.getParent().getRight()) {
+			// x does not have a right child
 			node = node.getParent();
 		}
-		return node.getParent(); // return the lowest node which has x in its
-									// left subtree
+		return node.getParent();
+		// return the lowest node which has x in its left subtree
 	}
 
 	/**
