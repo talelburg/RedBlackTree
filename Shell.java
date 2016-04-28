@@ -710,8 +710,8 @@ public class RBTree {
 				}
 			}
 
-			if (y.equals(NULL)) { // if tree was empty, rank is 1
-				return 1;
+			if (y.equals(NULL)) { // if tree was empty, rank is zero
+				return 0;
 			} else if (k < y.getKey()) {
 				z = y;
 			} else {
