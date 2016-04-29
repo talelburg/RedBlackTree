@@ -92,7 +92,9 @@ public class RBTree {
 		}
 
 		public void updateSize() {
-			this.size = this.right.size + this.left.size + 1;
+			if (!this.equals(NULL)) {
+				this.size = this.right.getSize() + this.left.getSize() + 1;
+			}
 		}
 
 		public int getKey() {
