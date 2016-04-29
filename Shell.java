@@ -24,7 +24,7 @@ public class RBTree {
 		private int size;
 
 		/**
-		 * public RBNODE(int key, String value, RBNode parent)
+		 * public RBNode(int key, String value, RBNode parent)
 		 * 
 		 * initializes a new node with key, value and parent according to input
 		 * left and right initialized to RBTree.NULL, color initialized as red
@@ -167,13 +167,6 @@ public class RBTree {
 			} else if (!value.equals(other.value))
 				return false;
 			return true;
-		}
-		
-		public String toString() {
-			if (this.equals(NULL)) 
-				return "NULL";
-			else 
-				return "[" + this.getLeft().toString() + ", " + this.getKey() + "-" + (this.isRed() ? "Red" : "Black") + ", " + this.getRight().toString() + "]";  
 		}
 	}
 
@@ -417,12 +410,13 @@ public class RBTree {
 		RBNode y = z, x;
 		boolean isOriginalYRed = y.isRed();
 		int count = 0;
-		if (z.getLeft().equals(NULL) || z.getRight().equals(NULL))
-		while (y != this.root) {
-			y = y.getParent();
-			y.decreaseSize();
+		if (z.getLeft().equals(NULL) || z.getRight().equals(NULL)) {
+			while (y != this.root) {
+				y = y.getParent();
+				y.decreaseSize();
+			}
+			y=z;
 		}
-		y=z;
 
 		if (z.getLeft().equals(NULL)) { // check if z has less than two children
 			x = z.getRight();
@@ -684,14 +678,14 @@ public class RBTree {
 			return new RBNode[0];
 		}
 		RBNode[] nodes = new RBNode[x.getSize()];
-		RBNode[] nodesLeft = nodesInOrder(x.getLeft()); 
+		RBNode[] nodesLeft = nodesInOrder(x.getLeft());
 		RBNode[] nodesRight = nodesInOrder(x.getRight());
-		for (int i = 0; i < nodesLeft.length; i++) { 
+		for (int i = 0; i < nodesLeft.length; i++) {
 			// first the nodes in the left subtree
 			nodes[i] = nodesLeft[i];
 		}
 		nodes[nodesLeft.length] = x; // then x
-		for (int i = 0; i < nodesRight.length; i++) { 
+		for (int i = 0; i < nodesRight.length; i++) {
 			// then the nodes in the right subtree
 			nodes[nodesLeft.length + 1 + i] = nodesRight[i];
 		} 
@@ -755,6 +749,14 @@ public class RBTree {
 	 * postcondition: none
 	 */
 	public int rank(int k) {
+		if (empty()) {		
+			// if tree is empty, rank is zero		
+			return 0;		
+		}		
+		if (k > treeMax(this.root).getKey()) {		
+			// k is bigger then all the keys in the tree		
+			return size();		
+		}
 		RBNode z = nodeSearch(k);
 		if (z == null) {
 			RBNode m = this.root;
@@ -767,15 +769,8 @@ public class RBTree {
 					m = m.getRight();
 				}
 			}
-
-			if (y.equals(NULL)) {
-				// if tree was empty, rank is zero
-				return 0;
-			} else if (k < y.getKey()) {
+			if (k < y.getKey()) {
 				z = y;
-			} else if (y.getKey() == treeMax(this.root).getKey()) {
-				// k is bigger then all the keys in the tree
-				return size();
 			} else {
 				z = findSuccessor(y);
 			}
