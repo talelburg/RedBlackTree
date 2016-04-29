@@ -657,6 +657,10 @@ public class RBTree {
 	 * array if the tree is empty.
 	 */
 	public RBNode[] nodesToArray() {
+		return nodesInOrder(getRoot());
+	}
+	
+	private RBNode[] nodesInOrder(RBNode x) {
 		if (x.getSize() == 0) { // triviality - if x is NULL
 			return new RBNode[0];
 		}
