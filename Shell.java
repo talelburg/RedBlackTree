@@ -707,10 +707,19 @@ public class RBTree {
 	 * precondition: none postcondition: none
 	 */
 	public int rank(int k) {
+		if (empty()) {
+			// if tree is empty, rank is zero
+			return 0;
+		}
+		if (k > treeMax(this.root).getKey()) {
+			// k is bigger then all the keys in the tree
+			return size();
+		}
 		RBNode z = nodeSearch(k);
 		if (z == null) {
 			RBNode m = this.root;
 			RBNode y = NULL;
+			
 			while (!m.equals(NULL)) {
 				y = m;
 				if (k < m.getKey()) {
@@ -720,14 +729,8 @@ public class RBTree {
 				}
 			}
 
-			if (y.equals(NULL)) {
-				// if tree was empty, rank is zero
-				return 0;
-			} else if (k < y.getKey()) {
+			if (k < y.getKey()) {
 				z = y;
-			} else if (y.getKey() == treeMax(this.root).getKey()) {
-				// k is bigger then all the keys in the tree
-				return size();
 			} else {
 				z = findSuccessor(y);
 			}
