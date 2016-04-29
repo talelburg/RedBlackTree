@@ -732,7 +732,8 @@ public class RBTree {
 	 *
 	 * Returns the number of nodes in the tree.
 	 *
-	 * precondition: none postcondition: none
+	 * precondition: none
+	 * postcondition: none
 	 */
 	public int size() {
 		return this.root.getSize();
@@ -743,7 +744,8 @@ public class RBTree {
 	 *
 	 * Returns the number of nodes in the tree with a key smaller than k.
 	 *
-	 * precondition: none postcondition: none
+	 * precondition: none
+	 * postcondition: none
 	 */
 	public int rank(int k) {
 		if (empty()) {
