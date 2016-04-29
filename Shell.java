@@ -653,26 +653,29 @@ public class RBTree {
 	/**
 	 * public int[] keysToArray()
 	 *
-	 * Returns a sorted array which contains all keys in the tree, or an empty
+	 * Returns a sorted array which contains all nodes in the tree, or an empty
 	 * array if the tree is empty.
 	 */
 	public RBNode[] nodesToArray() {
 		return nodesInOrder(getRoot());
 	}
-	
+
 	private RBNode[] nodesInOrder(RBNode x) {
 		if (x.getSize() == 0) { // triviality - if x is NULL
 			return new RBNode[0];
 		}
 		RBNode[] nodes = new RBNode[x.getSize()];
-		RBNode[] nodesLeft = nodesInOrder(x.getLeft()), nodesRight = nodesInOrder(x.getRight());
-		for (int i = 0; i < nodesLeft.length; i++) { // first the nodes in the left subtree
+		RBNode[] nodesLeft = nodesInOrder(x.getLeft());
+		RBNode[] nodesRight = nodesInOrder(x.getRight());
+		for (int i = 0; i < nodesLeft.length; i++) {
+			// first the nodes in the left subtree
 			nodes[i] = nodesLeft[i];
 		}
 		nodes[nodesLeft.length] = x; // then x
-		for (int i = 0; i < nodesRight.length; i++) { // then the nodes in the right subtree
+		for (int i = 0; i < nodesRight.length; i++) {
+			// then the nodes in the right subtree
 			nodes[nodesLeft.length + 1 + i] = nodesRight[i];
-		} 
+		}
 		return nodes;
 	}
 
@@ -687,7 +690,7 @@ public class RBTree {
 			return new int[0];
 		}
 		RBNode[] nodeArr = nodesToArray();
-		int[] keysArr = new int[size()];
+		int[] keysArr = new int[nodeArr.length];
 		for (int i = 0; i < nodeArr.length; i++) {
 			keysArr[i] = nodeArr[i].getKey();
 		}
@@ -705,7 +708,7 @@ public class RBTree {
 			return new String[0];
 		}
 		RBNode[] nodeArr = nodesToArray();
-		String[] valueArr = new String[size()];
+		String[] valueArr = new String[nodeArr.length];
 		for (int i = 0; i < nodeArr.length; i++) {
 			valueArr[i] = nodeArr[i].getValue();
 		}
