@@ -657,7 +657,19 @@ public class RBTree {
 	 * array if the tree is empty.
 	 */
 	public RBNode[] nodesToArray() {
-		return null;
+		if (x.getSize() == 0) { // triviality - if x is NULL
+			return new RBNode[0];
+		}
+		RBNode[] nodes = new RBNode[x.getSize()];
+		RBNode[] nodesLeft = nodesInOrder(x.getLeft()), nodesRight = nodesInOrder(x.getRight());
+		for (int i = 0; i < nodesLeft.length; i++) { // first the nodes in the left subtree
+			nodes[i] = nodesLeft[i];
+		}
+		nodes[nodesLeft.length] = x; // then x
+		for (int i = 0; i < nodesRight.length; i++) { // then the nodes in the right subtree
+			nodes[nodesLeft.length + 1 + i] = nodesRight[i];
+		} 
+		return nodes;
 	}
 
 	/**
