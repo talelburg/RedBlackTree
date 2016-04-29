@@ -92,9 +92,7 @@ public class RBTree {
 		}
 
 		public void updateSize() {
-			if (!this.equals(NULL)) {
-				this.size = this.right.getSize() + this.left.getSize() + 1;
-			}
+			this.size = this.right.size + this.left.size + 1;
 		}
 
 		public int getKey() {
@@ -656,18 +654,26 @@ public class RBTree {
 	 * Returns a sorted array which contains all keys in the tree, or an empty
 	 * array if the tree is empty.
 	 */
+	public RBNode[] nodesToArray() {
+		return null;
+	}
+
+	/**
+	 * public int[] keysToArray()
+	 *
+	 * Returns a sorted array which contains all keys in the tree, or an empty
+	 * array if the tree is empty.
+	 */
 	public int[] keysToArray() {
 		if (empty()) { // triviality check - if tree is empty
 			return new int[0];
 		}
-		int[] arr = new int[size()];
-		RBNode node = treeMin(this.root);
-		arr[0] = node.getKey(); // start with minimal key
-		for (int i = 1; i < arr.length; i++) { // insert next smallest key
-			node = findSuccessor(node);
-			arr[i] = node.getKey();
+		RBNode[] nodeArr = nodesToArray();
+		int[] keysArr = new int[size()];
+		for (int i = 0; i < nodeArr.length; i++) {
+			keysArr[i] = nodeArr[i].getKey();
 		}
-		return arr;
+		return keysArr;
 	}
 
 	/**
@@ -680,14 +686,12 @@ public class RBTree {
 		if (empty()) { // triviality check - if tree is empty
 			return new String[0];
 		}
-		String[] arr = new String[size()];
-		RBNode node = treeMin(this.root);
-		arr[0] = node.getValue(); // start with minimal key
-		for (int i = 1; i < arr.length; i++) { // insert by order of keys
-			node = findSuccessor(node);
-			arr[i] = node.getValue();
+		RBNode[] nodeArr = nodesToArray();
+		String[] valueArr = new String[size()];
+		for (int i = 0; i < nodeArr.length; i++) {
+			valueArr[i] = nodeArr[i].getValue();
 		}
-		return arr;
+		return valueArr;
 	}
 
 	/**
@@ -721,7 +725,7 @@ public class RBTree {
 		if (z == null) {
 			RBNode m = this.root;
 			RBNode y = NULL;
-			
+
 			while (!m.equals(NULL)) {
 				y = m;
 				if (k < m.getKey()) {
