@@ -410,21 +410,28 @@ public class RBTree {
 		RBNode y = z, x;
 		boolean isOriginalYRed = y.isRed();
 		int count = 0;
-
+		if (z.getLeft().equals(NULL) || z.getRight().equals(NULL))
 		while (y != this.root) {
 			y = y.getParent();
 			y.decreaseSize();
 		}
-		y = z;
+		y=z;
 
 		if (z.getLeft().equals(NULL)) { // check if z has less than two children
 			x = z.getRight();
 			transplant(z, z.getRight());
+			
+			
 		} else if (z.getRight().equals(NULL)) {
 			x = z.getLeft();
 			transplant(z, z.getLeft());
 		} else { // z has two children
 			y = findSuccessor(z);
+			RBNode t = y;
+			while (t != this.root) {
+				t = t.getParent();
+				t.decreaseSize();
+			}
 			isOriginalYRed = y.isRed();
 			x = y.getRight(); // keep track of the node to carry the extra
 								// blackness
@@ -437,6 +444,7 @@ public class RBTree {
 				y.getRight().setParent(y);
 			}
 			transplant(z, y);
+			y.setSize(z.getSize());
 			y.setLeft(z.getLeft());
 			y.getLeft().setParent(y);
 			if (y.isRed() != z.isRed()) {
