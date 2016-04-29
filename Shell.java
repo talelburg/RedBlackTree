@@ -382,11 +382,11 @@ public class RBTree {
 					leftRotate(z.getParent().getParent());
 				}
 			}
+			if (this.root.isRed()) {
+				count++;
+			}
+			this.root.setIsRed(false); // make sure root is black
 		}
-		if (this.root.isRed()) {
-			count++;
-		}
-		this.root.setIsRed(false); // make sure root is black
 		return count;
 	}
 
@@ -611,11 +611,20 @@ public class RBTree {
 		if (this.empty()) {
 			return null;
 		}
-		RBNode node = this.root;
+		return treeMax(this.root).getValue();
+	}
+
+	/**
+	 * public RBNode treeMax(RBNode x)
+	 * 
+	 * returns the node with maximal key in the subtree rooted at the node x
+	 */
+	public RBNode treeMax(RBNode x) {
+		RBNode node = x;
 		while (!node.getRight().equals(NULL)) { // go as far right as possible
 			node = node.getRight();
 		}
-		return node.getValue();
+		return node;
 	}
 
 	/**
@@ -630,8 +639,8 @@ public class RBTree {
 			return treeMin(node.getRight());
 			// find minimal node in right subtree of x, a.k.a its successor
 		}
+		// x does not have a right child
 		while (node == node.getParent().getRight()) {
-			// x does not have a right child
 			node = node.getParent();
 		}
 		return node.getParent();
@@ -710,10 +719,14 @@ public class RBTree {
 				}
 			}
 
-			if (y.equals(NULL)) { // if tree was empty, rank is zero
+			if (y.equals(NULL)) {
+				// if tree was empty, rank is zero
 				return 0;
 			} else if (k < y.getKey()) {
 				z = y;
+			} else if (y.getKey() == treeMax(this.root).getKey()) {
+				// k is bigger then all the keys in the tree
+				return size();
 			} else {
 				z = findSuccessor(y);
 			}
