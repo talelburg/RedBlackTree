@@ -382,11 +382,12 @@ public class RBTree {
 					leftRotate(z.getParent().getParent());
 				}
 			}
-			if (this.root.isRed()) {
-				count++;
-			}
-			this.root.setIsRed(false); // make sure root is black
 		}
+		if (this.root.isRed()) {
+			count++;
+		}
+		this.root.setIsRed(false); // make sure root is black
+
 		return count;
 	}
 
