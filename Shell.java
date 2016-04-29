@@ -168,6 +168,13 @@ public class RBTree {
 				return false;
 			return true;
 		}
+		
+		public String toString() {
+			if (this.equals(NULL)) 
+				return "NULL";
+			else 
+				return "[" + this.getLeft().toString() + ", " + this.getKey() + "-" + (this.isRed() ? "Red" : "Black") + ", " + this.getRight().toString() + "]";  
+		}
 	}
 
 	/**
@@ -209,13 +216,13 @@ public class RBTree {
 	}
 
 	/**
-	 * public RBNode nodeSearch(int k)
+	 * private RBNode nodeSearch(int k)
 	 * 
 	 * returns the node with key k if it exists in the tree otherwise, returns
 	 * null
 	 */
 
-	public RBNode nodeSearch(int k) {
+	private RBNode nodeSearch(int k) {
 		RBNode x = this.root;
 		// binary search
 		while (!x.equals(NULL)) {
@@ -231,12 +238,12 @@ public class RBTree {
 	}
 
 	/**
-	 * public void leftRotate(RBNode x)
+	 * private void leftRotate(RBNode x)
 	 * 
 	 * rotates the subtree rooted at the node x to the left
 	 */
 
-	public void leftRotate(RBNode x) {
+	private void leftRotate(RBNode x) {
 		RBNode y = x.getRight();
 		x.setRight(y.getLeft());
 		if (!y.getLeft().equals(NULL)) {
@@ -257,12 +264,12 @@ public class RBTree {
 	}
 
 	/**
-	 * public void rightRotate(RBNode x)
+	 * private void rightRotate(RBNode x)
 	 * 
 	 * rotates the subtree rooted at the node x to the right
 	 */
 
-	public void rightRotate(RBNode x) {
+	private void rightRotate(RBNode x) {
 		RBNode y = x.getLeft();
 		x.setLeft(y.getRight());
 		if (!y.getRight().equals(NULL)) {
@@ -328,14 +335,14 @@ public class RBTree {
 	}
 
 	/**
-	 * public int insertFixUp(RBNode z)
+	 * private int insertFixUp(RBNode z)
 	 * 
 	 * performs color switches and rotations to preserve the red and black rules
 	 * following the insertion of the node z. returns the number of
 	 * color-switches performed while fixing the tree.
 	 */
 
-	public int insertFixUp(RBNode z) {
+	private int insertFixUp(RBNode z) {
 		RBNode y = NULL;
 		int count = 0;
 		while (z.getParent().isRed()) {
@@ -460,7 +467,7 @@ public class RBTree {
 	}
 
 	/**
-	 * public void transplant(RBNode x, RBNode y)
+	 * private void transplant(RBNode x, RBNode y)
 	 * 
 	 * moves node y into x's position in the tree, setting its parent to be x's
 	 * and changing the parent's child to be y. does not make x's children y's
@@ -471,7 +478,7 @@ public class RBTree {
 	 * work.
 	 */
 
-	public void transplant(RBNode x, RBNode y) {
+	private void transplant(RBNode x, RBNode y) {
 		if (x.getParent().equals(NULL)) { // if x is root update root
 			this.root = y;
 		} else if (x == x.getParent().getLeft()) { // make sure y is x's parent
@@ -484,7 +491,7 @@ public class RBTree {
 	}
 
 	/**
-	 * public int deleteFixUp(RBNode x)
+	 * private int deleteFixUp(RBNode x)
 	 * 
 	 * performs color switches and rotations to preserve the red and black
 	 * rules. receives as input the node x that carries the extra blackness
@@ -492,7 +499,7 @@ public class RBTree {
 	 * while fixing the tree.
 	 */
 
-	public int deleteFixUp(RBNode x) {
+	private int deleteFixUp(RBNode x) {
 		int count = 0;
 		RBNode w;
 		while (!x.equals(this.root) && !x.isRed()) {
@@ -599,12 +606,12 @@ public class RBTree {
 	}
 
 	/**
-	 * public RBNode treeMin(RBNode x)
+	 * private RBNode treeMin(RBNode x)
 	 * 
 	 * returns the node with minimal key in the subtree rooted at the node x
 	 */
 
-	public RBNode treeMin(RBNode x) {
+	private RBNode treeMin(RBNode x) {
 		RBNode node = x;
 		while (!node.getLeft().equals(NULL)) { // go as far left as possible
 			node = node.getLeft();
@@ -626,11 +633,11 @@ public class RBTree {
 	}
 
 	/**
-	 * public RBNode treeMax(RBNode x)
+	 * private RBNode treeMax(RBNode x)
 	 * 
 	 * returns the node with maximal key in the subtree rooted at the node x
 	 */
-	public RBNode treeMax(RBNode x) {
+	private RBNode treeMax(RBNode x) {
 		RBNode node = x;
 		while (!node.getRight().equals(NULL)) { // go as far right as possible
 			node = node.getRight();
@@ -639,12 +646,11 @@ public class RBTree {
 	}
 
 	/**
-	 * public RBNode findSuccessor(RBNode x)
+	 * private RBNode findSuccessor(RBNode x)
 	 * 
 	 * returns the node with the next-largest key, following the node x
 	 */
-
-	public RBNode findSuccessor(RBNode x) {
+	private RBNode findSuccessor(RBNode x) {
 		RBNode node = x;
 		if (!node.getRight().equals(NULL)) { // if x has a right child
 			return treeMin(node.getRight());
@@ -657,33 +663,38 @@ public class RBTree {
 		return node.getParent();
 		// return the lowest node which has x in its left subtree
 	}
-
+	
 	/**
-	 * public int[] keysToArray()
-	 *
-	 * Returns a sorted array which contains all nodes in the tree, or an empty
-	 * array if the tree is empty.
+	 * private RBNode[] nodesToArray()
+	 * 
+	 * returns an array containing all nodes in the tree, sorted by their keys.
 	 */
-	public RBNode[] nodesToArray() {
+	private RBNode[] nodesToArray() {
 		return nodesInOrder(getRoot());
 	}
-
+	
+	/**
+	 * private RBNode[] nodesInOrder()
+	 * 
+	 * returns an array containing all nodes in the subtree rooted at node x,
+	 * sorted by their keys. performs in order walk of the tree.
+	 */
 	private RBNode[] nodesInOrder(RBNode x) {
 		if (x.getSize() == 0) { // triviality - if x is NULL
 			return new RBNode[0];
 		}
 		RBNode[] nodes = new RBNode[x.getSize()];
-		RBNode[] nodesLeft = nodesInOrder(x.getLeft());
+		RBNode[] nodesLeft = nodesInOrder(x.getLeft()); 
 		RBNode[] nodesRight = nodesInOrder(x.getRight());
-		for (int i = 0; i < nodesLeft.length; i++) {
+		for (int i = 0; i < nodesLeft.length; i++) { 
 			// first the nodes in the left subtree
 			nodes[i] = nodesLeft[i];
 		}
 		nodes[nodesLeft.length] = x; // then x
-		for (int i = 0; i < nodesRight.length; i++) {
+		for (int i = 0; i < nodesRight.length; i++) { 
 			// then the nodes in the right subtree
 			nodes[nodesLeft.length + 1 + i] = nodesRight[i];
-		}
+		} 
 		return nodes;
 	}
 
@@ -728,7 +739,8 @@ public class RBTree {
 	 *
 	 * Returns the number of nodes in the tree.
 	 *
-	 * precondition: none postcondition: none
+	 * precondition: none 
+	 * postcondition: none
 	 */
 	public int size() {
 		return this.root.getSize();
@@ -739,23 +751,15 @@ public class RBTree {
 	 *
 	 * Returns the number of nodes in the tree with a key smaller than k.
 	 *
-	 * precondition: none postcondition: none
+	 * precondition: none 
+	 * postcondition: none
 	 */
 	public int rank(int k) {
-		if (empty()) {
-			// if tree is empty, rank is zero
-			return 0;
-		}
-		if (k > treeMax(this.root).getKey()) {
-			// k is bigger then all the keys in the tree
-			return size();
-		}
 		RBNode z = nodeSearch(k);
 		if (z == null) {
 			RBNode m = this.root;
 			RBNode y = NULL;
-
-			while (!m.equals(NULL)) {
+			while (!m.equals(NULL)) { // find the node that is the closest to key k
 				y = m;
 				if (k < m.getKey()) {
 					m = m.getLeft();
@@ -764,8 +768,14 @@ public class RBTree {
 				}
 			}
 
-			if (k < y.getKey()) {
+			if (y.equals(NULL)) {
+				// if tree was empty, rank is zero
+				return 0;
+			} else if (k < y.getKey()) {
 				z = y;
+			} else if (y.getKey() == treeMax(this.root).getKey()) {
+				// k is bigger then all the keys in the tree
+				return size();
 			} else {
 				z = findSuccessor(y);
 			}
@@ -781,9 +791,4 @@ public class RBTree {
 		}
 		return rank;
 	}
-
-	/**
-	 * If you wish to implement classes, other than RBTree and RBNode, do it in
-	 * this file, not in another file.
-	 */
 }
