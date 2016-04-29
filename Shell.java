@@ -415,14 +415,13 @@ public class RBTree {
 				y = y.getParent();
 				y.decreaseSize();
 			}
-			y=z;
+			y = z;
 		}
 
 		if (z.getLeft().equals(NULL)) { // check if z has less than two children
 			x = z.getRight();
 			transplant(z, z.getRight());
-			
-			
+
 		} else if (z.getRight().equals(NULL)) {
 			x = z.getLeft();
 			transplant(z, z.getLeft());
@@ -657,7 +656,7 @@ public class RBTree {
 		return node.getParent();
 		// return the lowest node which has x in its left subtree
 	}
-	
+
 	/**
 	 * private RBNode[] nodesToArray()
 	 * 
@@ -666,7 +665,7 @@ public class RBTree {
 	private RBNode[] nodesToArray() {
 		return nodesInOrder(getRoot());
 	}
-	
+
 	/**
 	 * private RBNode[] nodesInOrder()
 	 * 
@@ -688,7 +687,7 @@ public class RBTree {
 		for (int i = 0; i < nodesRight.length; i++) {
 			// then the nodes in the right subtree
 			nodes[nodesLeft.length + 1 + i] = nodesRight[i];
-		} 
+		}
 		return nodes;
 	}
 
@@ -733,8 +732,7 @@ public class RBTree {
 	 *
 	 * Returns the number of nodes in the tree.
 	 *
-	 * precondition: none 
-	 * postcondition: none
+	 * precondition: none postcondition: none
 	 */
 	public int size() {
 		return this.root.getSize();
@@ -745,23 +743,23 @@ public class RBTree {
 	 *
 	 * Returns the number of nodes in the tree with a key smaller than k.
 	 *
-	 * precondition: none 
-	 * postcondition: none
+	 * precondition: none postcondition: none
 	 */
 	public int rank(int k) {
-		if (empty()) {		
-			// if tree is empty, rank is zero		
-			return 0;		
-		}		
-		if (k > treeMax(this.root).getKey()) {		
-			// k is bigger then all the keys in the tree		
-			return size();		
+		if (empty()) {
+			// if tree is empty, rank is zero
+			return 0;
+		}
+		if (k > treeMax(this.root).getKey()) {
+			// k is bigger then all the keys in the tree
+			return size();
 		}
 		RBNode z = nodeSearch(k);
 		if (z == null) {
 			RBNode m = this.root;
 			RBNode y = NULL;
-			while (!m.equals(NULL)) { // find the node that is the closest to key k
+			while (!m.equals(NULL)) {
+				// find the node that is the closest to key k
 				y = m;
 				if (k < m.getKey()) {
 					m = m.getLeft();
